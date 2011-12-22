@@ -5,7 +5,8 @@ pause()
 read -n 1 -p "Press any key..."
 }
 
-
+setup()
+{
 #This script intended to be "run in terminal" Nautilus
 
 #Remove the old sorted files
@@ -20,17 +21,19 @@ mkdir -p "test"
 #Copy the backups of the unsorted files into the folder to sort them from
 cp pixbkup/* test/
 
-#----------------------------------------
-
-echo "Testing with no slashes..."
-pause
-
 #List the current state of the files
 ls -aR test/
 
 #Pause until user responds
 pause
+}
 
+#----------------------------------------
+
+echo "Testing with no slashes..."
+pause
+
+setup
 
 #Do the sort
 photoscript test move
@@ -46,12 +49,7 @@ pause
 echo "Testing with slash on test/..."
 pause
 
-#List the current state of the files
-ls -aR test/
-
-#Pause until user responds
-pause
-
+setup
 
 #Do the sort
 photoscript test/ move
@@ -68,12 +66,7 @@ pause
 echo "Testing with slash on move/..."
 pause
 
-#List the current state of the files
-ls -aR test/
-
-#Pause until user responds
-pause
-
+setup
 
 #Do the sort
 photoscript test move/
@@ -90,12 +83,7 @@ pause
 echo "Testing with slash on test/ and move/..."
 pause
 
-#List the current state of the files
-ls -aR test/
-
-#Pause until user responds
-pause
-
+setup
 
 #Do the sort
 photoscript test/ move/
