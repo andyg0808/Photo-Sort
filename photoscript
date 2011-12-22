@@ -1,0 +1,35 @@
+#!/bin/bash
+if [ -z "$1" -o -z "$2" ]
+then
+echo "Usage: $(basename $0) folder_of_unsorted folder_of_sorted"
+exit
+fi
+
+#Find duplicate files
+#Goes through the specified directories recursively, deleting duplicate files.
+#Only deletes the second and greater copy of each file.
+#Checks the sorted files first, to (hopefully) prevent them from being deleted
+#and replaced.
+fdupes --recurse --delete --noprompt "$2" "$1"
+
+#Now that the duplicates are stripped, rename all the files with rnmoddate.
+find "$1" -type f -execdir rndate '{}' \;
+
+#Move all the files to their new locations according to their names
+find "$1" -type f -exec pixmv '{}' "$2" \;
+
+
+#cat ../Partition1/duplicateslist | xargs rm -vv
+
+
+#find Sorted/ -empty -delete
+
+#find -type d -execdir "exiv2 mv *.jpg"
+
+#find Unsorted/ -type f -exec rnmoddate '{}' \;
+
+#find Unsorted/ -type f -exec exiv2 -F mv '{}' +
+
+#find -type f Unsorted/ -execdir rnmoddate '{}' \;
+
+

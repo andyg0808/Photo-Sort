@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+#The regexp should match both the orig. filenames from exiv2 and the filenames this script generates (so it can be used on pre-existing sorted files)
+if($ARGV[0] =~ m<^(?:.*/)?([0-9]{4})-?([0-9]{2})-?([0-9]{2})(?:_| )([0-9]{2})(?::|-)?([0-9]{2})(?::|-)?([0-9]{2})(_[0-9]+)?.(.*)$>i){
+
+
+#Generate the directory name to create. Uses second argument if present for the root of the new tree
+if($ARGV[1]) {
+	$dir="$ARGV[1]/$1/$2/";
+} else {
+	$dir="./$1/$2/";
+}
+
+#Generate the filename to rename to
+$fname="$1-$2-$3_$4-$5-$6$7.".lc($8);
+
+
+#Create the new dir tree
+system "mkdir", "--parents", "$dir";
+
+#Output the path and the name of the renamed file
+print "Moving ${ARGV[0]} to $dir/$fname\n";
+
+#Move the file there
+exec 'mv', "--no-clobber", "$ARGV[0]", "$dir/$fname";
+}
+

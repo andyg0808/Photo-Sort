@@ -1,0 +1,5 @@
+#Rename
+All files shall be renamed according to their picture-taken date; items without the picture-taken date shall be renamed according to their date modified (making it compatible with Linux FS)
+
+#Duplicate check
+All files shall be checked against a database stored at the root of the directory tree that they will be inserted into. The database will contain the 

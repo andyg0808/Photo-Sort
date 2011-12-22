@@ -1,0 +1,3 @@
+#!/bin/bash
+name=$(apg -n1)
+mv "$1" "$2/$name"
