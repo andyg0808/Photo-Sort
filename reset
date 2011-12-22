@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#Remove the old sorted files
+rm -R move/
+
+#Make a new directory for the sorted files
+mkdir move/
+
+#Copy the backups of the unsorted files into the folder to sort them from
+cp ../pixbkup/* test/
+
+#List the current state of the files
+ls -aR
+
+#Pause until user responds
+read
+
+#Do the sort
+photoscript test move
+
+#Pause again
+read
+
+#List the current state again
+ls -aR
