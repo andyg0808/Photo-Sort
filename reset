@@ -22,9 +22,18 @@ mkdir -p "test"
 cp pixbkup/* test/
 
 #List the current state of the files
-ls -aR test/
+ls -aR move/ test/
 
 #Pause until user responds
+pause
+}
+
+finish()
+{
+#List the current state again
+ls -aR test/ move/
+
+#Pause again
 pause
 }
 
@@ -38,12 +47,7 @@ setup
 #Do the sort
 photoscript test move
 
-
-#List the current state again
-ls -aR move/
-
-#Pause again
-pause
+finish
 #----------------------------------------
 
 echo "Testing with slash on test/..."
@@ -54,12 +58,7 @@ setup
 #Do the sort
 photoscript test/ move
 
-
-#List the current state again
-ls -aR move/
-
-#Pause again
-pause
+finish
 
 #----------------------------------------
 
@@ -71,12 +70,7 @@ setup
 #Do the sort
 photoscript test move/
 
-
-#List the current state again
-ls -aR move/
-
-#Pause again
-pause
+finish
 
 #----------------------------------------
 
@@ -88,10 +82,5 @@ setup
 #Do the sort
 photoscript test/ move/
 
-
-#List the current state again
-ls -aR move/
-
-#Pause again
-pause
+finish
 
