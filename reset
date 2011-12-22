@@ -1,25 +1,39 @@
 #!/bin/bash
 
+pause()
+{
+read -n 1 -p "Press any key..."
+}
+
+
+#This script intended to be "run in terminal" Nautilus
+
 #Remove the old sorted files
 rm -R move/
 
 #Make a new directory for the sorted files
 mkdir move/
 
+#Make a directory (if needed) for the unsorted files
+mkdir -p "test"
+
 #Copy the backups of the unsorted files into the folder to sort them from
-cp ../pixbkup/* test/
+cp pixbkup/* test/
+
 
 #List the current state of the files
-ls -aR
+ls -aR test/
 
 #Pause until user responds
-read
+pause
+
 
 #Do the sort
 photoscript test move
 
-#Pause again
-read
 
 #List the current state again
-ls -aR
+ls -aR move/
+
+#Pause again
+pause
