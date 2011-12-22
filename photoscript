@@ -18,11 +18,12 @@ find "$1" -type f -execdir rndate '{}' \;
 #Move all the files to their new locations according to their names
 find "$1" -type f -exec pixmv '{}' "$2" \;
 
+#Delete now-empty directories
+find "$1" "$2" -type d -empty -delete
+
+
 
 #cat ../Partition1/duplicateslist | xargs rm -vv
-
-
-#find Sorted/ -empty -delete
 
 #find -type d -execdir "exiv2 mv *.jpg"
 
