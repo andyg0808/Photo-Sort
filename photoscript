@@ -19,7 +19,7 @@ find "$1" -type f -execdir rndate '{}' \;
 find "$1" -type f -exec pixmv '{}' "$2" \;
 
 #Delete now-empty directories
-find "$1" "$2" -type d -empty -delete
+find "$1"/* "$2"/* -type d -empty -delete
 
 
 
