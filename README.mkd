@@ -47,6 +47,9 @@ A simple bash script to simplify testing of photoscript. Requires a folder of th
 ##duprnmv
 Moves files to a specified folder and stores them with a random name. Intended as an alternative to deleting duplicate files, to allow human review of the captured files. It will overwrite another file with a file of the same generated name, if that happened.
 
+##README.mkd
+This README, which is in Markdown format.
+
 #License
 Photoscript--A photo-sorting script
 Copyright (C) 2011  andyg0808
