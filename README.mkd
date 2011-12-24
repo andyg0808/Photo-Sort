@@ -1,0 +1,66 @@
+%Photosort: A Basic photo-sorting script
+#Overview
+**WARNING:**
+PHOTOSORT IS DESIGNED TO RENAME AND/OR PERMANENTLY DELETE
+FILES WITHOUT WARNING. DO NOT RUN IT UNLESS YOU ARE SURE
+OF WHAT YOU ARE DOING. I AM NOT RESPONSIBLE FOR ANY HARM
+YOU CAUSE, WITH OR WITHOUT PHOTOSORT. SEE DISCLAIMER OF
+WARRANTY BELOW.
+
+Photosort provides a simple photo-sorting capability. It is written in Bash,
+and runs other scripts to do its job.
+
+#Dependencies
+- exiv2
+- fdupes
+- ssed
+- bash
+- perl
+
+#Usage
+photoscript _unsorted_ _sorted_
+
+pixmv, and rndate must be in your path for photoscript to work.
+
+It has been tested on an Ubuntu 11.10 system with the above dependencies installed.
+
+#Descriptions
+##photoscript
+photoscript finds duplicate files across the directories _sorted_ and _unsorted_ using fdupes and deletes all but one copy.
+It then renames all the files in _unsorted_ with rndate. Finally, it moves all the files
+to a year/month directory scheme in _sorted_ with pixmv, and then deletes all empty files and folders in _unsorted._
+
+##rndate
+rndate renames files according to their date taken, if possible. If not, it renames them using their date modified.
+The date-taken renaming is performed using exiv2. The date modified renaming is done with bash code in rndate.
+
+##pixmv
+pixmv moves the files to a directory structure with one folder for each year. Each year folder contains a group of month folders. Each month folder contains all the pictures that were taken that month.
+pixmv uses the names of the files to determine the directory to put them in.
+
+#Other files:
+Some other scripts and files are included in this project. Descriptions follow.
+
+##reset
+A simple bash script to simplify testing of photoscript. Requires a folder of things to process called pixbkup.
+
+##duprnmv
+Moves files to a specified folder and stores them with a random name. Intended as an alternative to deleting duplicate files, to allow human review of the captured files. It will overwrite another file with a file of the same generated name, if that happened.
+
+#License
+Photoscript--A photo-sorting script
+Copyright (C) 2011  andyg0808
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
