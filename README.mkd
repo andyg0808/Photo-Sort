@@ -1,4 +1,3 @@
-%Photosort: A Basic photo-sorting script
 #Overview
 **WARNING:**
 PHOTOSORT IS DESIGNED TO RENAME AND/OR PERMANENTLY DELETE
