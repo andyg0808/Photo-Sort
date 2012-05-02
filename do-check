@@ -1,0 +1,86 @@
+#!/bin/bash
+
+pause()
+{
+read -n 1 -p "Press any key..."
+}
+
+setup()
+{
+#This script intended to be "run in terminal" Nautilus
+
+#Remove the old sorted files
+rm -R move/
+
+#Make a new directory for the sorted files
+mkdir move/
+
+#Make a directory (if needed) for the unsorted files
+mkdir -p "test"
+
+#Copy the backups of the unsorted files into the folder to sort them from
+cp pixbkup/* test/
+
+#List the current state of the files
+ls -aR move/ test/
+
+#Pause until user responds
+pause
+}
+
+finish()
+{
+#List the current state again
+ls -aR test/ move/
+
+#Pause again
+pause
+}
+
+#----------------------------------------
+
+echo "Testing with no slashes..."
+pause
+
+setup
+
+#Do the sort
+photoscript test move
+
+finish
+#----------------------------------------
+
+echo "Testing with slash on test/..."
+pause
+
+setup
+
+#Do the sort
+photoscript test/ move
+
+finish
+
+#----------------------------------------
+
+echo "Testing with slash on move/..."
+pause
+
+setup
+
+#Do the sort
+photoscript test move/
+
+finish
+
+#----------------------------------------
+
+echo "Testing with slash on test/ and move/..."
+pause
+
+setup
+
+#Do the sort
+photoscript test/ move/
+
+finish
+
