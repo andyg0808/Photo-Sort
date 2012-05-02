@@ -34,7 +34,7 @@ fdupes --recurse --delete --noprompt "$2" "$1"
 find "$1" -type f -execdir rndate '{}' \;
 
 #Move all the files to their new locations according to their names
-find "$1" -type f -exec pixmv '{}' "$2" \;
+find "$1" -type f -execdir pixmv '{}' "$PWD/$2" \;
 
 #Delete now-empty directories
 find "$1"/* "$2"/* -type d -empty -delete
