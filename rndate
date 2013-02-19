@@ -18,19 +18,22 @@
 #Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
+#Add an extension (if needed) and return the new filename
+filename="$(addextension "$1")"
+
 #If exiv2 can rename the file, let it.
-if exiv2 -v -F rename "$1"
+if exiv2 -v -F rename "$filename"
 then
-echo "Renamed $1 with exiv2"
+echo "Renamed $filename with exiv2"
 exit
 fi
 
-date=$(stat -c%y "$1" | ssed -R 's/\..*//')
-ext=$(echo "$1" | ssed -R 's/.*?(\.[^.]+)?$/\1/')
-head=$(dirname "$1")
+date=$(stat -c%y "$filename" | ssed -R 's/\..*//')
+ext=$(echo "$filename" | ssed -R 's/.*?(\.[^.]+)?$/\1/')
+head=$(dirname "$filename")
 
 #Check if the file's current name is the same as the new name
-if [ "$(basename $1)" == "$date$ext" ]
+if [ "$(basename $filename)" == "$date$ext" ]
 then
 exit
 fi
@@ -40,11 +43,11 @@ fi
 if [ ! -e "$head/$date$ext" ]
 then
 #Output the old and new names of this file
-echo "$1" "$head/$date$ext"
+echo "$filename" "$head/$date$ext"
 
 #Move the file. The --no-clobber is a precaution against some bug causing an
 #inadvertant overwrite
-mv --no-clobber "$1" "$head/$date$ext"
+mv --no-clobber "$filename" "$head/$date$ext"
 else
 
 suf=1
@@ -56,9 +59,9 @@ let suf++
 done
 
 echo "Substitute name:"
-echo "$1" "$head/${date}_$suf$ext"
+echo "$filename" "$head/${date}_$suf$ext"
 
 #We must now have found a suffix that works--move the file to that name
-mv --no-clobber "$1" "$head/${date}_$suf$ext"
+mv --no-clobber "$filename" "$head/${date}_$suf$ext"
 fi
-echo "Renamed $1 with modified date"
+echo "Renamed $filename with modified date"

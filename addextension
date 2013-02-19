@@ -1,0 +1,83 @@
+#!/usr/bin/env perl
+#Photosort--A photo-sorting script
+#Copyright (C) 2011  andyg0808 
+
+#This program is free software; you can redistribute it and/or
+#modify it under the terms of the GNU General Public License
+#as published by the Free Software Foundation; either version 2
+#of the License, or (at your option) any later version.
+
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
+use warnings;
+use strict;
+use File::Copy;
+
+sub getNewExtension ($) {
+	my $filename = $_[0];
+	my $fileinfo = `file $filename`;
+
+	for ($fileinfo) {
+		# LOOKUP TABLE
+		# Match the regex on the left to the result of the file command
+		/JPEG image data/ && return '.jpg';
+		/RIFF \(\S+\) data, AVI, \S+ x \S+, \S+ fps, video: Motion JPEG, audio: uncompressed PCM \(\S+, \S+ Hz\)/ && return '.avi';
+	}
+}
+
+sub hasExtension ($) {
+	my $current = $_[0];
+	# Take a non-slash character (the last character of the filename before the extension)
+	# Finally, take the period and the extension (slash-free and dot-free text) itself. Require the extension to exist.
+	return $current =~ m|[^/]\.[^/.]+$|
+}
+
+my $filename = $ARGV[0];
+if ($filename && -e $filename) {
+	# Just spit back the original name if it's got an extension
+	if (hasExtension $filename) {
+		print STDERR "No need to fix extension on $filename\n";
+		print $filename;
+		exit;
+	}
+
+	# Actual work--finds extension via file and lookup in a table
+	my $ext = getNewExtension $filename;
+
+	my $newname = "$filename$ext";
+
+	# Check that there's not a file here already...
+	if (! -e $newname) {
+		# Go ahead and move the file to the new name
+		print STDERR "Adding $ext to $filename to make $newname\n";
+		move $filename, $newname;
+		print $newname;
+		exit;
+	}
+
+	# If we get here, there must be a file at our name of first choice
+	my $count = 0;
+	while (-e $newname) {
+		$count ++;
+		$newname = "$filename-$count$ext";
+	}
+
+	# Move the file to the discovered name
+	print STDERR "Adding $ext to $filename to make $newname\n";
+	move $filename, $newname;
+	print $newname;
+	exit;
+} else {
+	# Spit back whatever baloney they gave us and exit with an error
+	print STDERR "No need to fix extension on $filename\n";
+	print $filename;
+	exit 2;
+}
